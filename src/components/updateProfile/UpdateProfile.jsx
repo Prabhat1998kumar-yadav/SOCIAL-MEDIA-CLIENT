@@ -3,10 +3,13 @@ import "./UpdateProfile.scss"
 
 import userFImg from "../../assests/user.png"
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading, updateMyProfile } from '../../redux/slices/appConfigSlice';
+import { setLoading, showToast, updateMyProfile } from '../../redux/slices/appConfigSlice';
+import { useNavigate } from 'react-router-dom';
+import { axiosClient } from '../../utils/axiosClient';
+import { TOAST_SUCCESS } from '../../App';
 function UpdateProfile() {
     const myProfile=useSelector(state=>state.appConfigReducer.myProfile); 
-     
+    const toastData=useSelector(state=>state.appConfigReducer.toastData);
     const[name,setName]=useState("")
     const [bio,setBio]=useState("");
     const[userImg,setUserImg]=useState("");
@@ -37,6 +40,23 @@ function UpdateProfile() {
         }))
 
     }
+    async function handleDelete(){
+        try{
+            let response= await axiosClient.delete("/user")
+            
+            if(response){
+                dispatch(showToast({
+                    type:TOAST_SUCCESS,
+                    message:response.data.result
+                }))
+            }
+        }catch(error){
+            dispatch(showToast({
+                type:TOAST_FAILURE,
+                message:error
+            }))
+        }
+    }
 
   return (
     <div className='updateProfile'>
@@ -57,7 +77,7 @@ function UpdateProfile() {
                     <input type='submit' className='btn-primary' onClick={handleSubmit}/>
                 </form>
 
-                <button className='delete-account btn-primary'>Delete Account</button>
+                <button className='delete-account btn-primary' onClick={handleDelete}>Delete Account</button>
             </div>
         </div>
     </div>

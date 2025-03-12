@@ -12,7 +12,7 @@ function CreatePost() {
   const[caption,setCaption]=useState("")
   const dispatch=useDispatch();  
   const myPorfile=useSelector(state=>state.appConfigReducer.myProfile)
-  console.log(myPorfile)
+ 
   function handleImageChange(e){
     const file=e.target.files[0];
     const fileReader=new FileReader();
