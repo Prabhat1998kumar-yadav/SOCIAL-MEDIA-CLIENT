@@ -5,9 +5,13 @@ import store from "../redux/store"
 import { setLoading, showToast } from "../redux/slices/appConfigSlice";
 import { TOAST_FAILURE } from "../App";
 
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : import.meta.env.VITE_APP_SERVER_BASE_URL
 
-export const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_APP_SERVER_BASE_URL,
+export const axiosClient = axios.create({  
+  baseURL,
   withCredentials: true,
 });
 
@@ -42,9 +46,9 @@ axiosClient.interceptors.response.use(
         // const response= await axiosClient.get("/auth/refresh");
         
         const response=await axios.create({
-          baseURL: import.meta.env.VITE_APP_SERVER_BASE_URL,
+          baseURL,
           withCredentials: true,
-        }).get(`${import.meta.env.VITE_APP_SERVER_BASE_URL}/auth/refresh`)
+        }).get(`${baseURL}/auth/refresh`)
         
         if(response.data.status === "ok"){
            
