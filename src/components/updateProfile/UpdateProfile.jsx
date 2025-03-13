@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, showToast, updateMyProfile } from '../../redux/slices/appConfigSlice';
 import { useNavigate } from 'react-router-dom';
 import { axiosClient } from '../../utils/axiosClient';
-import { TOAST_SUCCESS } from '../../App';
+import { TOAST_FAILURE, TOAST_SUCCESS } from '../../App';
 function UpdateProfile() {
     const myProfile=useSelector(state=>state.appConfigReducer.myProfile); 
     const toastData=useSelector(state=>state.appConfigReducer.toastData);
@@ -51,10 +51,8 @@ function UpdateProfile() {
                 }))
             }
         }catch(error){
-            dispatch(showToast({
-                type:TOAST_FAILURE,
-                message:error
-            }))
+          
+            console.log(error)
         }
     }
 
