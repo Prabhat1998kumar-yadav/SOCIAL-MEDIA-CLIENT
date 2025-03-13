@@ -7,4 +7,4 @@ export default defineConfig({
   preview: {
     allowedHosts: ['social-media-client-a3xa.onrender.com'],
   },
-})
+});
